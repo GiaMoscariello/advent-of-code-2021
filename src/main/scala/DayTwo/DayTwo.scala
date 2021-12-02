@@ -1,7 +1,5 @@
 package DayTwo
 
-import Utils.ReadInputFile
-
 import scala.annotation.tailrec
 
 object DayTwo {
@@ -17,11 +15,14 @@ object DayTwo {
 
   private def calculate(lst: List[(String, Integer)]): Integer = {
     @tailrec
-    def loop(lst: List[(String, Integer)], acc: (Integer, Integer)): (Integer, Integer) = lst match {
-      case head :: tail if head._1 == "forward"   => val (_, value) = head; loop(tail, (acc._1 + value, acc._2))
-      case head :: tail if head._1 == "up"        => val (_, value) = head; loop(tail, (acc._1, acc._2 - value))
-      case head :: tail if head._1 == "down"      => val (_, value) = head; loop(tail, (acc._1, acc._2 + value))
-      case _                            => acc
+    def loop(lst: List[(String, Integer)], position: (Integer, Integer)): (Integer, Integer) = {
+      val (hor, depth) = position
+      lst match {
+        case head :: tail if head._1 == "forward"   => val (_, value) = head; loop(tail, (hor + value, depth))
+        case head :: tail if head._1 == "up"        => val (_, value) = head; loop(tail, (hor, depth - value))
+        case head :: tail if head._1 == "down"      => val (_, value) = head; loop(tail, (hor, depth + value))
+        case _                                      => position
+      }
     }
     val pos = loop(lst, (0, 0))
     pos._1 * pos._2

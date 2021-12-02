@@ -1,6 +1,8 @@
 package Utils
 
 object ReadInputFile {
+  val root = "src/main/scala/"
+  val source = scala.io.Source.fromFile(root)
 
   def toList(filename: String): List[Integer] = {
     val source = scala.io.Source.fromFile(filename)
