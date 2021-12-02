@@ -19,7 +19,6 @@ object DayTwo {
       case h :: t if h._1 == "down"     => loop(t, (acc._1, acc._2 + h._2))
       case _                            => acc
     }
-
     val pos = loop(lst, (0, 0))
     pos._1 * pos._2
   }
