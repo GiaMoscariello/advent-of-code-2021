@@ -24,8 +24,8 @@ object DayTwo {
         case _                                      => position
       }
     }
-    val pos = loop(lst, (0, 0))
-    pos._1 * pos._2
+    val (hor, depth) = loop(lst, (0, 0))
+    hor * depth
   }
 
   private def calculateEnhanced(lst: List[(String, Integer)]): Integer = {
