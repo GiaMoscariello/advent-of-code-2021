@@ -11,12 +11,16 @@ case class Bingo(drawNumbers: List[String], tables: List[Table]) {
   }
 
   def winningTable(table: Table): Boolean = {
-    table.values.exists(line => line.forall(x => x == Int.MinValue)) ||
-      table.values.transpose.exists(line => line.forall(x => x == Int.MinValue))
+    table.values.exists(line => bingoLine(line)) ||
+      table.values.transpose.exists(line => bingoLine(line))
+  }
+
+  private def bingoLine(line: Seq[Int]): Boolean = {
+   line.forall(x => x == Int.MinValue)
   }
 
   def BINGO(): Option[Table] = {
-    tables.find{table => winningTable(table)}
+    tables.find { table => winningTable(table) }
   }
 
   def extractNumberAndDeleteWinningTable(number: Int): Bingo = {
@@ -35,7 +39,7 @@ case class Table(values: Seq[List[Int]], id: Int, crossed: List[Int] = List()) {
 object Table {
   def crossTable(number: Int, table: Table): Table = {
     Table(table.values
-      .map(line => line.map( x => if (x == number) Int.MinValue else x)),
+      .map(line => line.map(x => if (x == number) Int.MinValue else x)),
       table.id, number :: table.crossed)
   }
 }
